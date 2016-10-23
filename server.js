@@ -46,6 +46,15 @@ app.get('/', function(req, res) {
 });
 
 app.post('/api/todos', function(req, res) {
-    console.log(req.body);
-    res.redirect('/');
+    if (req.body.text === '' || req.body.toDate === '') {
+        res.send('Invalid parameters');
+        return;
+    }
+    var t = new Todo({
+        text: req.body.text,
+        done: false,
+        toDate: req.body.toDate
+    });
+    t.save();
+    res.send('Saved successfully');
 });
