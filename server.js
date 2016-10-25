@@ -45,6 +45,19 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/api/todos', function(req, res) {
+    db.collection('todos').find().toArray(function(err, results) {
+        res.send(results);
+    });
+});
+
+app.get('/api/todos/:id', function(req, res) {
+    var id = parseInt(req.params.id);
+    db.collection('todos').find({ todoId: id }).toArray(function(err, results) {
+        res.send(results);
+    });
+});
+
 app.post('/api/todos', function(req, res) {
     if (req.body.text === '' || req.body.toDate === '') {
         res.send('Invalid parameters');
