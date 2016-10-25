@@ -17,7 +17,7 @@ db.once('open', function() {
     var todoSchema = mongoose.Schema({
         todoId: Number,
         text: String,
-        done: Boolean,
+        state: Number,
         toDate: Date
     });
 
@@ -65,7 +65,7 @@ app.post('/api/todos', function(req, res) {
     }
     var t = new Todo({
         text: req.body.text,
-        done: false,
+        state: 0,
         toDate: req.body.toDate
     });
     t.save();
