@@ -60,7 +60,7 @@ app.get('/api/todos/:id', function(req, res) {
 
 app.post('/api/todos', function(req, res) {
     if (req.body.text === '' || req.body.toDate === '') {
-        res.send('Invalid parameters');
+        res.status(422).send('Invalid parameters');
         return;
     }
     var t = new Todo({
