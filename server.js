@@ -68,8 +68,13 @@ app.post('/api/todos', function(req, res) {
         state: 0,
         toDate: req.body.toDate
     });
-    t.save();
-    res.send('Saved successfully');
+    t.save(function(err, user) {
+        if (err) {
+            res.status(422).send('Error');
+        } else {
+            res.send('Saved successfully');
+        }
+    });
 });
 
 app.delete('/api/todos/:id', function(req, res) {
