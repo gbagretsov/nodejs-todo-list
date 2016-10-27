@@ -47,14 +47,22 @@ app.get('/', function(req, res) {
 
 app.get('/api/todos', function(req, res) {
     Todo.find(function(err, results) {
-        res.send(results);
+        if (results.length > 0) {
+            res.send(results);
+        } else {
+            res.send('Nothing found');
+        }
     });
 });
 
 app.get('/api/todos/:id', function(req, res) {
     var id = parseInt(req.params.id);
     Todo.findOne({ todoId: id }, function(err, results) {
-        res.send(results);
+        if (results) {
+            res.send(results);
+        } else {
+            res.send('Document not found');
+        }
     });
 });
 
