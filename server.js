@@ -71,3 +71,22 @@ app.post('/api/todos', function(req, res) {
     t.save();
     res.send('Saved successfully');
 });
+
+app.delete('/api/todos/:id', function(req, res) {
+    var id = parseInt(req.params.id);
+    Todo.findOne({ todoId: id }, function(err,todo) {
+        if (err) {
+            res.send('Error');
+        } else if (todo) {
+            Todo.remove({ todoId: id }, function(err,removed) {
+                if (err) {
+                    res.send('Error');
+                } else {
+                    res.send('Deleted successfully');
+                }
+            });
+        } else {
+            res.send('Nothing to delete');
+        }
+    });
+});
