@@ -5,10 +5,36 @@
     <title>TODO List</title>
 </head>
 <body>
-    <form action="/api/todos" method="POST">
-        <textarea name="text" cols="30" rows="10" placeholder="Input your note text here..."></textarea>
-        <input type="date" name="toDate">
-        <input type="submit">
-    </form>
+    <h1>To-Do manager</h1>
+
+    <div>
+        <h2>POST new todo</h2>
+        <form action="/api/todos" method="POST">
+            <textarea name="text" cols="30" rows="10" placeholder="Input your note text here..."></textarea>
+            <input type="date" name="toDate">
+            <input type="submit">
+        </form>
+    </div>
+
+    <div>
+        <h2>DELETE a todo</h2>
+        <form action="#">
+            <input type="number" id="txtTodoId" name="todoId" placeholder="Todo ID">
+            <input type="button" id="btnSendDelete" value="Delete">
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script>
+        $('#btnSendDelete').click(function() {
+            $.ajax('/api/todos/' + $('#txtTodoId').val(), {
+                method: 'DELETE',
+                complete: function(jqXHR, textStatus){
+                    alert(jqXHR.responseText);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
