@@ -46,14 +46,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/api/todos', function(req, res) {
-    db.collection('todos').find().toArray(function(err, results) {
+    Todo.find(function(err, results) {
         res.send(results);
     });
 });
 
 app.get('/api/todos/:id', function(req, res) {
     var id = parseInt(req.params.id);
-    db.collection('todos').find({ todoId: id }).toArray(function(err, results) {
+    Todo.findOne({ todoId: id }, function(err, results) {
         res.send(results);
     });
 });
