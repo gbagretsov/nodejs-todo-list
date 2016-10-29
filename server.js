@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/api/todos', function(req, res) {
-    Todo.find(function(err, results) {
+    Todo.find({}, '-_id -__v', function(err, results) {
         if (results.length > 0) {
             res.send(results);
         } else {
@@ -57,7 +57,7 @@ app.get('/api/todos', function(req, res) {
 
 app.get('/api/todos/:id', function(req, res) {
     var id = parseInt(req.params.id);
-    Todo.findOne({ todoId: id }, function(err, results) {
+    Todo.findOne({ todoId: id }, '-_id -__v', function(err, results) {
         if (results) {
             res.send(results);
         } else {
@@ -80,7 +80,10 @@ app.post('/api/todos', function(req, res) {
         if (err) {
             res.status(422).send('Error');
         } else {
-            res.send(todo);
+            oTodo = todo.toObject();
+            delete oTodo._id;
+            delete oTodo.__v;
+            res.send(oTodo);
         }
     });
 });
@@ -98,7 +101,10 @@ app.put('/api/todos/:id', function(req, res) {
             state: parseInt(req.body.state),
             toDate: req.body.toDate
         },
-        { new: true },
+        {
+            new: true,
+            fields: '-_id -__v'
+        },
         function(err,todo) {
         if (err) {
             res.send('Error');
