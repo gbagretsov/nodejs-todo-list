@@ -85,6 +85,30 @@ app.post('/api/todos', function(req, res) {
     });
 });
 
+app.put('/api/todos/:id', function(req, res) {
+    if (req.body.text === '' || req.body.state === '' || req.body.toDate === '') {
+        res.status(422).send('Invalid parameters');
+        return;
+    }
+    var id = parseInt(req.params.id);
+    Todo.findOneAndUpdate(
+        { todoId: id }, 
+        {
+            text: req.body.text,
+            state: parseInt(req.body.state),
+            toDate: req.body.toDate
+        },
+        function(err,todo) {
+        if (err) {
+            res.send('Error');
+        } else if (todo) {
+            res.send('Updated successfully');
+        } else {
+            res.send('Nothing to update');
+        }
+    });
+});
+
 app.delete('/api/todos/:id', function(req, res) {
     var id = parseInt(req.params.id);
     Todo.findOne({ todoId: id }, function(err,todo) {

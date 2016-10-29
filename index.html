@@ -17,9 +17,20 @@
     </div>
 
     <div>
+        <h2>PUT changed to existing todo</h2>
+        <form action="#">
+            <input placeholder="ID" type="number" id="todoIdPut">
+            <textarea id="todoText" cols="30" rows="10"></textarea>
+            <input type="date" id="todoDate">
+            <input placeholder="State" type="number" id="todoState">
+            <input type="button" id="btnSendPut" value="Change">
+        </form>
+    </div>
+
+    <div>
         <h2>DELETE a todo</h2>
         <form action="#">
-            <input type="number" id="txtTodoId" name="todoId" placeholder="Todo ID">
+            <input type="number" id="todoIdDelete" name="todoId" placeholder="Todo ID">
             <input type="button" id="btnSendDelete" value="Delete">
         </form>
     </div>
@@ -27,8 +38,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script>
+        $('#btnSendPut').click(function() {
+            $.ajax('/api/todos/' + $('#todoIdPut').val(), {
+                method: 'PUT',
+                data: { 
+                    'text': $('#todoText').val(),
+                    'state': $('#todoState').val(),
+                    'toDate': $('#todoDate').val()
+                },
+                complete: function(jqXHR, textStatus){
+                    alert(jqXHR.responseText);
+                }
+            });
+        });
+
         $('#btnSendDelete').click(function() {
-            $.ajax('/api/todos/' + $('#txtTodoId').val(), {
+            $.ajax('/api/todos/' + $('#todoIdDelete').val(), {
                 method: 'DELETE',
                 complete: function(jqXHR, textStatus){
                     alert(jqXHR.responseText);
