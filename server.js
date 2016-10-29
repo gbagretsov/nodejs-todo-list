@@ -76,11 +76,11 @@ app.post('/api/todos', function(req, res) {
         state: 0,
         toDate: req.body.toDate
     });
-    t.save(function(err, user) {
+    t.save(function(err, todo) {
         if (err) {
             res.status(422).send('Error');
         } else {
-            res.send('Saved successfully');
+            res.send(todo);
         }
     });
 });
@@ -98,11 +98,12 @@ app.put('/api/todos/:id', function(req, res) {
             state: parseInt(req.body.state),
             toDate: req.body.toDate
         },
+        { new: true },
         function(err,todo) {
         if (err) {
             res.send('Error');
         } else if (todo) {
-            res.send('Updated successfully');
+            res.send(todo);
         } else {
             res.send('Nothing to update');
         }
