@@ -1,2 +1,2 @@
 # TODO List
-A simple TODO list on Node.js and Angular
+A simple TODO list &ndash; Node.js based server-side
